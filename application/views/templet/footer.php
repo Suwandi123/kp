@@ -1,14 +1,14 @@
 <footer class="main-footer">
-    <strong>Desa Girijaya 2021 </strong> Maju Bersama Membangun Desa
+	<strong>Desa Girijaya 2021 </strong> Maju Bersama Membangun Desa
 </footer>
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
-    <!-- Create the tabs -->
-    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-        <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-        <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-    </ul>
-    <!-- Tab panes -->
+	<!-- Create the tabs -->
+	<ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+		<li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+		<li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+	</ul>
+	<!-- Tab panes -->
 </aside>
 <!-- /.control-sidebar -->
 <!-- Add the sidebar's background. This div must be placed
@@ -22,69 +22,62 @@
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
-    $.widget.bridge('uibutton', $.ui.button);
+	$.widget.bridge('uibutton', $.ui.button);
 </script>
 
 <script>
-    $(document).ready(function() {
-        $("#pembayaran").click(function() {
-            id = $('.nomor').val();
-
-            $.ajax({
-                type: 'GET',
-                url: '<?= site_url('Pembayaran/ajax/') ?>' + id,
-
-                success: function(data) {
-                    hasil = JSON.parse(data)
-                    $('.lokasi').val(hasil[0].lokasi);
-                    $('.nama_penyewa').val(hasil[0].nama);
-                },
-                error: function(data) {
-
-                    alert(data);
-                }
-            })
-        });
-        $('.kirim').click(function() {
-            id = $('.nomor').val();
-            $('.bayar').prop('action', '<?= base_url('Pembayaran/bayar/') ?>' + id);
-        })
-        $('.pembayaran').change(function() {
-            id = $(this).val();
-            $.ajax({
-                type: 'GET',
-                url: '<?= site_url('Pembayaran/ajax/') ?>' + id,
-
-                success: function(data) {
-                    hasil = JSON.parse(data)
-                    $('.lokasi').val(hasil[0].lokasi);
-                    $('.nama_penyewa').val(hasil[0].nama);
-                },
-                error: function(data) {
-
-                    alert(data);
-                }
-            })
-        });
-
-        $('.lama_sewa').change(function() {
-            id = $(this).val();
-            lokasi = $('.lokasi').val();
-            $.ajax({
-                type: 'GET',
-                url: '<?= site_url('Pembayaran/hitung/') ?>' + id + '/' + lokasi,
-                success: function(data) {
-                    $('.uang').val(data);
-                    $('.sewa').prop('action', action = "<?php echo base_url('Pembayaran/tambah_aksi') ?>" + '/' + data);
-                },
-                error: function(data) {
-
-                    alert(data);
-                }
-            })
-        });
-
-    })
+	$(document).ready(function() {
+		$("#pembayaran").click(function() {
+			id = $('.nomor').val();
+			$.ajax({
+				type: 'GET',
+				url: '<?= site_url('Pembayaran/ajax/') ?>' + id,
+				success: function(data) {
+					hasil = JSON.parse(data)
+					$('.lokasi').val(hasil[0].lokasi);
+					$('.nama_penyewa').val(hasil[0].nama);
+				},
+				error: function(data) {
+					alert(data);
+				}
+			});
+		});
+		$('.kirim').click(function() {
+			id = $('.nomor').val();
+			$('.bayar').prop('action', '<?= base_url('Pembayaran/bayar/') ?>' + id);
+		});
+		$('.pembayaran').change(function() {
+			id = $(this).val();
+			$.ajax({
+				type: 'GET',
+				url: '<?= site_url('Pembayaran/ajax/') ?>' + id,
+				success: function(data) {
+					hasil = JSON.parse(data)
+					console.log(hasil)
+					$('.lokasi').val(hasil[0].lokasi);
+					$('.nama_penyewa').val(hasil[0].nama);
+				},
+				error: function(data) {
+					alert(data);
+				}
+			});
+		});
+		$('.lama_sewa').change(function() {
+			id = $(this).val();
+			lokasi = $('.lokasi').val();
+			$.ajax({
+				type: 'GET',
+				url: '<?= site_url('Pembayaran/hitung/') ?>' + id + '/' + lokasi,
+				success: function(data) {
+					$('.uang').val(data);
+					$('.sewa').prop('action', action = "<?php echo base_url('Pembayaran/tambah_aksi') ?>" + '/' + data);
+				},
+				error: function(data) {
+					alert(data);
+				}
+			});
+		});
+	});
 </script>
 
 <!-- Bootstrap 3.3.6 -->
